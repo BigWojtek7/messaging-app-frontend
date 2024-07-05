@@ -1,0 +1,8 @@
+.sidebar{
+  color:white
+}
+
+.sidebar a {
+  color: inherit;
+  text-decoration: inherit;
+}
