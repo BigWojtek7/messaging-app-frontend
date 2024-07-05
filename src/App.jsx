@@ -1,11 +1,17 @@
 import { Outlet } from 'react-router-dom';
-import './App.css';
+import styles from './App.module.css';
+import Sidebar from './components/Sidebar/Sidebar';
 
 function App() {
   return (
-    <>
-      <Outlet />
-    </>
+    <div className={styles.content}>
+      <nav className={styles.sidebar}>
+        <Sidebar />
+      </nav>
+      <main className={styles.mainDiv}>
+        <Outlet />
+      </main>
+    </div>
   );
 }
 
