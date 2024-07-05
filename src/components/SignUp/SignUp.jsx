@@ -7,22 +7,22 @@ function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const dataToSubmit = new FormData(e.target);
     console.log(e.target.username.value);
 
     const postApi = async () => {
-      const res = await fetch('https://incandescent-creative-gaura.glitch.me/sign-up', {
+      const res = await fetch('http://localhost:3000/register', {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           username: e.target.username.value,
           password: e.target.password.value,
           re_password: e.target.re_password.value,
-          is_admin: false,
         }),
         method: 'post',
       });
+      console.log(res)
       const data = await res.json();
       setFetchData(data);
+      console.log(data)
       if (data.success) {
         navigate('/');
       }
@@ -33,6 +33,7 @@ function SignUp() {
 
   return (
     <>
+      <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="username">Username</label>
         <input id="username" name="username" type="text" />
