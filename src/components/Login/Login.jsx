@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
-  const [fetchData, setFetchData] = useState(false);
+  const [fetchData, setFetchData] = useState(null);
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     const postApi = async () => {
-      const res = await fetch('http://localhost:3000/register', {
+      const res = await fetch('http://localhost:3000/login', {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           username: e.target.username.value,
@@ -26,6 +26,7 @@ function Login() {
     };
     postApi();
   };
+  console.log(fetchData)
 
   return (
     <>
@@ -35,9 +36,8 @@ function Login() {
         <label htmlFor="password">Password</label>
         <input id="password" name="password" type="password" />
         <button>Log In</button>
+        {fetchData && <p>{fetchData.msg}</p>}
       </form>
-
-      {fetchData && <p>{fetchData.msg}</p>}
     </>
   );
 }

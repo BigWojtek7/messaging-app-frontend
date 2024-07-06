@@ -21,6 +21,9 @@ form {
   align-items: baseline;
   gap: 5px;
 }
+form p {
+  font-size: .8em;
+}
 
 button {
   background-color: #0284c7;

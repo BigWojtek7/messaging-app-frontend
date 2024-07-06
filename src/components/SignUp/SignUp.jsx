@@ -19,10 +19,10 @@ function SignUp() {
         }),
         method: 'post',
       });
-      console.log(res)
+      console.log(res);
       const data = await res.json();
       setFetchData(data);
-      console.log(data)
+      console.log(data);
       if (data.success) {
         navigate('/');
       }
@@ -40,12 +40,10 @@ function SignUp() {
         <input id="password" name="password" type="password" />
         <label htmlFor="re_password">Re-Password</label>
         <input id="re_password" name="re_password" type="password" />
-        <button>Sign Up</button>
+        <button>Sign Up</button>{' '}
+        {fetchData &&
+          fetchData.msg.map((err, index) => <p key={index}>{err.msg}</p>)}
       </form>
-      {fetchData &&
-        fetchData.msg.map((err, index) => (
-          <p key={index}>{err.msg}</p>
-        ))}
     </>
   );
 }
