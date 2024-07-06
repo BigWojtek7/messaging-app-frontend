@@ -8,6 +8,7 @@
 body{
   width: 100vw;
   height: 100vh;
+  background-color: rgb(234, 234, 234);
 }
 
 #root{
@@ -19,4 +20,14 @@ form {
   flex-direction: column;
   align-items: baseline;
   gap: 5px;
+}
+
+button {
+  background-color: rgb(0, 85, 255);
+  color: white;
+  padding: 5px;
+  border: none;
+  border-radius: 3px;
+  font-weight: 700;
+  cursor: pointer;
 }

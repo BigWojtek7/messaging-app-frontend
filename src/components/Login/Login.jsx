@@ -7,17 +7,14 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const postApi = async () => {
-      const res = await fetch(
-        'https://incandescent-creative-gaura.glitch.me/login',
-        {
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            username: e.target.username.value,
-            password: e.target.password.value,
-          }),
-          method: 'post',
-        }
-      );
+      const res = await fetch('http://localhost:3000/register', {
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: e.target.username.value,
+          password: e.target.password.value,
+        }),
+        method: 'post',
+      });
       const data = await res.json();
       setFetchData(data);
       const dataToken = data.token;
@@ -32,7 +29,6 @@ function Login() {
 
   return (
     <>
-      <h1>Login:</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="username">Username</label>
         <input id="username" name="username" type="text" />

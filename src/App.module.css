@@ -1,4 +1,4 @@
-.content {
+.app {
   display: flex;
   height: 100%;
 }
@@ -7,7 +7,7 @@
   width: 30%;
   height: 100%;
   padding: 20px;
-  background-color: rgb(0, 81, 255);
+  background-color: #0284c7;
 }
 
 .sidebar ul li {
@@ -17,7 +17,12 @@
 }
 
 .mainDiv {
-  padding: 20px;
+  /* padding: 20px; */
   width: 100%;
-  
+}
+.content{
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
 }
