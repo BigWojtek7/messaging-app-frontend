@@ -8,6 +8,12 @@
   gap: 0.5em;
 }
 
+.sidebar ul{
+  display: flex;
+  flex-direction: column;
+  gap: 10px
+}
+
 .sidebar a {
   color: inherit;
   text-decoration: inherit;

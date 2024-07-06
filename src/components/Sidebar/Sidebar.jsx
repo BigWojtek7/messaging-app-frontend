@@ -11,6 +11,15 @@ function Header() {
         <li>
           <Link to="login">Log-in</Link>
         </li>
+        <li>
+          <Link to="profile">Profile</Link>
+        </li>
+        <li>
+          <Link to="messages">Messages</Link>
+        </li>
+        <li>
+          <Link to="create-message">Create Message</Link>
+        </li>
       </ul>
     </div>
   );
