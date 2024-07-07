@@ -1,8 +1,20 @@
-.header{
-  background-color: #ffffff ;
+.header {
+  background-color: #ffffff;
   color: #000000;
   padding: 25px;
   font-size: 1.5rem;
   text-align: center;
-  box-shadow: 0px 1px 3px gray ;
+  box-shadow: 0px 1px 3px gray;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header a {
+  text-decoration: inherit;
+  color: inherit;
+}
+.rightSide {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }

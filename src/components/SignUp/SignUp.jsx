@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 
 function SignUp() {
   const [fetchData, setFetchData] = useState(null);
   const navigate = useNavigate();
+  const [token, setToken] = useOutletContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,17 +35,21 @@ function SignUp() {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username</label>
-        <input id="username" name="username" type="text" />
-        <label htmlFor="password">Password</label>
-        <input id="password" name="password" type="password" />
-        <label htmlFor="re_password">Re-Password</label>
-        <input id="re_password" name="re_password" type="password" />
-        <button>Sign Up</button>{' '}
-        {fetchData &&
-          fetchData.msg.map((err, index) => <p key={index}>{err.msg}</p>)}
-      </form>
+      {!token ? (
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="username">Username</label>
+          <input id="username" name="username" type="text" />
+          <label htmlFor="password">Password</label>
+          <input id="password" name="password" type="password" />
+          <label htmlFor="re_password">Re-Password</label>
+          <input id="re_password" name="re_password" type="password" />
+          <button>Sign Up</button>{' '}
+          {fetchData &&
+            fetchData.msg.map((err, index) => <p key={index}>{err.msg}</p>)}
+        </form>
+      ) : (
+        <p>You are logged in</p>
+      )}
     </>
   );
 }
