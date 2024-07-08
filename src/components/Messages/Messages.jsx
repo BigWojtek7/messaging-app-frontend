@@ -33,9 +33,22 @@ function Messages() {
   console.log(messages);
 
   return (
-    <>
+    <div className={styles.messages}>
+      {messages.map(ms => (
+    <div key={ms._id}className={styles.message}>
+      <div className={styles.stripe}></div>
+      <div className={styles.cardContent}>
+        <p className="title">{ms.title}</p>
+        <p>
+          {ms.content}
+        </p>
+      </div>
+      <div className="card-icons">
+      </div>
+    </div>
+  ))}
+  </div>
 
-    </>
   );
 }
 
