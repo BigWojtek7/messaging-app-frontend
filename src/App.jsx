@@ -5,11 +5,10 @@ import Header from './components/Header/Header';
 import { useEffect, useState } from 'react';
 
 function App() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({_id: undefined, username: undefined});
 
   const currentToken = localStorage.getItem('token');
   const [token, setToken] = useState(currentToken);
-  console.log(typeof token, token)
   useEffect(() => {
     if (token) {
       const postApi = async () => {
@@ -22,7 +21,6 @@ function App() {
           const data = await res.json();
 
           setUser(data);
-          console.log(data)
         } catch (err) {
           console.log(err.name);
         }
@@ -33,6 +31,9 @@ function App() {
       setUser([]);
     };
   }, [token]);
+  console.log(user);
+
+
   return (
     <div className={styles.app}>
       <nav className={styles.sidebar}>

@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import styles from './Header.module.css';
-
+import { useNavigate } from 'react-router-dom';
 import Icon from '@mdi/react';
 import {
   mdiLogout
@@ -8,8 +8,7 @@ import {
 
 function Header({ token, setToken, user }) {
   const { pathname } = useLocation();
-  console.log(pathname);
-
+  const navigate = useNavigate();
   const header =
     pathname !== '/'
       ? `${pathname[1].toUpperCase()}${pathname.replace('/', '').slice(1)}`
@@ -18,7 +17,10 @@ function Header({ token, setToken, user }) {
   const handleLogout = () => {
     localStorage.removeItem('token');
     setToken(null);
+    navigate('/')
+    
     alert('You are signed out');
+
   };
 
   return (

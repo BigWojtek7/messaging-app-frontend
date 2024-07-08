@@ -12,7 +12,7 @@ function CreateMessage() {
 
     const postApi = async () => {
       const res = await fetch('http://localhost:3000/create-message', {
-        headers: { 'Content-Type': 'application/json', Authorization: token, },
+        headers: { 'Content-Type': 'application/json', Authorization: token },
         body: JSON.stringify({
           title: e.target.title.value,
           content: e.target.content.value,
@@ -29,7 +29,7 @@ function CreateMessage() {
     };
     postApi();
   };
-  console.log(isSent);
+
 
   useEffect(() => {
     if (token) {
@@ -43,7 +43,7 @@ function CreateMessage() {
           const data = await res.json();
 
           setAllUsers(data);
-          console.log(data);
+
         } catch (err) {
           console.log(err.name);
         }
@@ -58,26 +58,33 @@ function CreateMessage() {
   console.log(allUsers);
   return (
     <>
-    {!isSent? <form onSubmit={handleSubmit}>
-      <p>
-        From: <strong>{user.username}</strong>
-      </p>
-      <label htmlFor="receiver">Receiver:</label>
-      <select name="receiver" id="receiver">
-        {allUsers
-          .filter((rec) => rec.username !== user.username)
-          .map((receiver) => (
-            <option key={receiver._id} value={receiver._id}>
-              {receiver.username}
-            </option>
-          ))}
-      </select>
-      <label htmlFor="title">Title:</label>
-      <input type="text" id="title" name="title" />
-      <label htmlFor="content"></label>
-      <textarea name="content" id="content" rows="10" cols="30"></textarea>
-      <button>Send</button>
-    </form>: <div className='messageSent'><p>Your message has been sent</p><button onClick={()=> setIsSent(false)}>New message</button></div>}
+      {!isSent ? (
+        <form onSubmit={handleSubmit}>
+          <p>
+            From: <strong>{user.username}</strong>
+          </p>
+          <label htmlFor="receiver">Receiver:</label>
+          <select name="receiver" id="receiver">
+            {allUsers
+              .filter((rec) => rec.username !== user.username)
+              .map((receiver) => (
+                <option key={receiver._id} value={receiver._id}>
+                  {receiver.username}
+                </option>
+              ))}
+          </select>
+          <label htmlFor="title">Title:</label>
+          <input type="text" id="title" name="title" />
+          <label htmlFor="content"></label>
+          <textarea name="content" id="content" rows="10" cols="30"></textarea>
+          <button>Send</button>
+        </form>
+      ) : (
+        <div className="messageSent">
+          <p>Your message has been sent</p>
+          <button onClick={() => setIsSent(false)}>New message</button>
+        </div>
+      )}
     </>
   );
 }
