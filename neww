@@ -1,0 +1,16 @@
+return (
+  <>
+    <div className={styles.messages}>
+      {messages.map((message) => (
+        <div key={message._id} className={styles.message}>
+          <div className={styles.stripe}></div>
+          <div className={styles.cardContent}>
+            <p className="title">{message.title}</p>
+            <p>{message.content}</p>
+          </div>
+          <div className="card-icons" />
+        </div>
+      ))}
+    </div>
+  </>
+);
