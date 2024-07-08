@@ -5,7 +5,7 @@ import { useOutletContext } from 'react-router-dom';
 function SignUp() {
   const [fetchData, setFetchData] = useState(null);
   const navigate = useNavigate();
-  const [token, setToken] = useOutletContext();
+  const [token] = useOutletContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
