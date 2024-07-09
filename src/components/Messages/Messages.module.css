@@ -25,8 +25,21 @@ p {
 }
 
 .cardContent{
-   padding: 20px 20px 20px 30px;
+   padding: 20px 20px 5px 30px;
+   font-size: 0.8em;
+
 }
-.message p:first-child{
+.message .title{
   font-weight: 700;
+}
+
+.message .author {
+  text-align: left;
+  font-style: italic;
+  font-size: 0.9em;
+}
+
+.delete button {
+  padding: 0 5px;
+  margin: 5px;
 }

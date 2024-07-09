@@ -1,10 +1,33 @@
 import { useOutletContext } from 'react-router-dom';
 import styles from './Messages.module.css';
 import { useEffect, useState } from 'react';
+import Icon from '@mdi/react';
+import { mdiDelete } from '@mdi/js';
 
 function Messages() {
   const [messages, setMessages] = useState([]);
+  const [deleteRes, setDeleteRes] = useState({});
   const [token, , user] = useOutletContext();
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+
+    const messageId = e.currentTarget.value;
+    console.log(messageId);
+    const postApi = async () => {
+      const res = await fetch(`http://localhost:3000/${messageId}/delete`, {
+        headers: { 'Content-Type': 'application/json', Authorization: token },
+        method: 'delete',
+      });
+      console.log(res);
+      const data = await res.json();
+      console.log(data);
+      if (data.success) {
+        setDeleteRes(data);
+      }
+    };
+    postApi();
+  };
   useEffect(() => {
     if (user._id) {
       const postApi = async () => {
@@ -29,26 +52,30 @@ function Messages() {
     return () => {
       setMessages([]);
     };
-  }, [user, token]);
+  }, [user, token, deleteRes]);
   console.log(messages);
 
+  console.log(deleteRes);
   return (
     <div className={styles.messages}>
-      {messages.map(ms => (
-    <div key={ms._id}className={styles.message}>
-      <div className={styles.stripe}></div>
-      <div className={styles.cardContent}>
-        <p className="title">{ms.title}</p>
-        <p>
-          {ms.content}
-        </p>
-      </div>
-      <div className="card-icons">
-      </div>
+      {messages.map((ms) => (
+        <div key={ms._id} className={styles.message}>
+          <div className={styles.stripe}></div>
+          <div className={styles.cardContent}>
+            <p
+              className={styles.author}
+            >{`${ms.author.username} - ${ms.date_format}`}</p>
+            <p className={styles.title}>{ms.title}</p>
+            <p>{ms.content}</p>
+            <div className={styles.delete}>
+              <button onClick={handleDelete} value={ms.id}>
+                <Icon path={mdiDelete} size={1} />
+              </button>
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
-  ))}
-  </div>
-
   );
 }
 
