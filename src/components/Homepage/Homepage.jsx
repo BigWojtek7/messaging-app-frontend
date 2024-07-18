@@ -15,7 +15,7 @@ function Homepage() {
       const postApi = async () => {
         try {
           const res = await fetch(
-            `http://localhost:3000/${user._id}/messages-num`,
+            `${import.meta.env.VITE_BACKEND_URL}/${user._id}/messages-num`,
             {
               headers: {
                 Authorization: token,

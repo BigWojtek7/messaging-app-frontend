@@ -15,7 +15,7 @@ function Messages() {
     const messageId = e.currentTarget.value;
 
     const postApi = async () => {
-      const res = await fetch(`http://localhost:3000/${messageId}/delete`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/${messageId}/delete`, {
         headers: { 'Content-Type': 'application/json', Authorization: token },
         method: 'delete',
       });

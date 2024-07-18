@@ -21,7 +21,7 @@ function Profile() {
     // console.log(e.target.username.value);
     const postApi = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/${user._id}/username`, {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/${user._id}/username`, {
           headers: { 'Content-Type': 'application/json', Authorization: token },
           body: JSON.stringify({
             username: e.target.username.value,

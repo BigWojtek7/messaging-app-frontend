@@ -8,7 +8,7 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const postApi = async () => {
-      const res = await fetch('http://localhost:3000/login', {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/login`, {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           username: e.target.username.value,

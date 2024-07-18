@@ -13,7 +13,7 @@ function App() {
     if (token) {
       const postApi = async () => {
         try {
-          const res = await fetch(`http://localhost:3000/user`, {
+          const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user`, {
             headers: {
               Authorization: token,
             },

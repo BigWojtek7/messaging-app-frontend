@@ -12,7 +12,7 @@ function SignUp() {
     console.log(e.target.username.value);
 
     const postApi = async () => {
-      const res = await fetch('http://localhost:3000/register', {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/register`, {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           username: e.target.username.value,

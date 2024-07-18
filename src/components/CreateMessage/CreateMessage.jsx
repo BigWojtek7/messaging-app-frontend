@@ -33,7 +33,7 @@ function CreateMessage() {
     if (token) {
       const postApi = async () => {
         try {
-          const res = await fetch(`http://localhost:3000/all-users`, {
+          const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/all-users`, {
             headers: {
               Authorization: token,
             },
