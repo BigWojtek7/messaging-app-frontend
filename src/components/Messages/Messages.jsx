@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react';
 import Icon from '@mdi/react';
 import { mdiDelete } from '@mdi/js';
 
+import getRequestWithNativeFetch from '../../utils/fetchApiGet';
+import requestWithNativeFetch from '../../utils/fetchApi';
+
 function Messages() {
   const [messages, setMessages] = useState([]);
   const [deleteRes, setDeleteRes] = useState({});
@@ -11,51 +14,46 @@ function Messages() {
 
   const handleDelete = (e) => {
     e.preventDefault();
-
     const messageId = e.currentTarget.value;
 
-    const postApi = async () => {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/${messageId}/delete`, {
-        headers: { 'Content-Type': 'application/json', Authorization: token },
-        method: 'delete',
-      });
+    const fetchDataForDelete = async () => {
+      try {
+        const url = `${import.meta.env.VITE_BACKEND_URL}/${messageId}/delete`;
+        const headers = { Authorization: token };
+        const deleteData = await requestWithNativeFetch(url, 'DELETE', headers);
+        setDeleteRes(deleteData);
 
-      const data = await res.json();
-
-      if (data.success) {
-        setDeleteRes(data);
+        if (deleteData.success) {
+          setDeleteRes(deleteData);
+        }
+      } catch (err) {
+        console.log(err);
       }
     };
-    postApi();
+    fetchDataForDelete();
   };
+
   useEffect(() => {
     if (user._id) {
-      const postApi = async () => {
+      const fetchDataForMessages = async () => {
         try {
-          const res = await fetch(
-            `http://localhost:3000/${user._id}/messages`,
-            {
-              headers: {
-                Authorization: token,
-              },
-            }
-          );
-          const data = await res.json();
-
-          setMessages(data);
+          const url = `http://localhost:3000/${user._id}/messages`;
+          const headers = {
+            Authorization: token,
+          };
+          const messagesData = await getRequestWithNativeFetch(url, headers);
+          setMessages(messagesData);
         } catch (err) {
-          console.log(err.name);
+          console.log(err);
         }
       };
-      postApi();
+      fetchDataForMessages();
     }
     return () => {
       setMessages([]);
     };
   }, [user, token, deleteRes]);
-  console.log(messages);
 
-  console.log(deleteRes);
   return (
     <div className={styles.messages}>
       {messages.map((ms) => (

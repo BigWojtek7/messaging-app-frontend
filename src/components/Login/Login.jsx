@@ -1,35 +1,46 @@
 import { useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
+import requestWithNativeFetch from '../../utils/fetchApi';
 
 function Login() {
   const [fetchData, setFetchData] = useState(null);
   const [token, setToken] = useOutletContext();
   const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const postApi = async () => {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/login`, {
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+    const fetchDataForLogin = async () => {
+      try {
+        const url = `${import.meta.env.VITE_BACKEND_URL}/login`;
+        const headers = { 'Content-Type': 'application/json' };
+        const data = {
           username: e.target.username.value,
           password: e.target.password.value,
-        }),
-        method: 'post',
-      });
-      const data = await res.json();
-      setFetchData(data);
+        };
+        const messagesData = await requestWithNativeFetch(
+          url,
+          'POST',
+          headers,
+          data
+        );
+        setFetchData(messagesData);
 
-      const dataToken = data.token;
-      localStorage.setItem('token', dataToken);
-      setToken(dataToken);
+        const dataToken = messagesData.token;
+        localStorage.setItem('token', dataToken);
+        setToken(dataToken);
 
-      if (data.success) {
-        navigate('/');
+        if (messagesData.success) {
+          navigate('/');
+        }
+      } catch (err) {
+        console.log(err);
       }
     };
-    postApi();
+    fetchDataForLogin();
+    return () => {
+      setFetchData([]);
+    };
   };
-  console.log(fetchData);
 
   return (
     <>

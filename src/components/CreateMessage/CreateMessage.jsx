@@ -1,5 +1,6 @@
 import { useOutletContext } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import getRequestWithNativeFetch from '../../utils/fetchApiGet';
 
 function CreateMessage() {
   const [token, , user] = useOutletContext();
@@ -31,27 +32,25 @@ function CreateMessage() {
 
   useEffect(() => {
     if (token) {
-      const postApi = async () => {
+      const fetchDataForUsernames = async () => {
         try {
-          const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/all-users`, {
-            headers: {
-              Authorization: token,
-            },
-          });
-          const data = await res.json();
-
-          setAllUsers(data);
-
+          const url = `${import.meta.env.VITE_BACKEND_URL}/all-users`;
+          const headers = {
+            Authorization: token,
+          };
+          const usernamesData = await getRequestWithNativeFetch(url, headers);
+          setAllUsers(usernamesData);
         } catch (err) {
-          console.log(err.name);
+          console.log(err);
         }
       };
-      postApi();
+      fetchDataForUsernames();
     }
     return () => {
       setAllUsers([]);
     };
   }, [token]);
+
 
   return (
     <>

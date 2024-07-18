@@ -1,7 +1,7 @@
-const requestWithNativeFetch = async (data, url, method) => {
+const requestWithNativeFetch = async (url, method, headers, data=undefined) => {
   const response = await fetch(url, {
     method: method,
-    headers: { 'content-type': 'application/json' },
+    headers: headers,
     body: JSON.stringify(data),
   });
   return response.json();
