@@ -13,15 +13,15 @@ function Messages() {
     e.preventDefault();
 
     const messageId = e.currentTarget.value;
-    console.log(messageId);
+
     const postApi = async () => {
       const res = await fetch(`http://localhost:3000/${messageId}/delete`, {
         headers: { 'Content-Type': 'application/json', Authorization: token },
         method: 'delete',
       });
-      console.log(res);
+
       const data = await res.json();
-      console.log(data);
+
       if (data.success) {
         setDeleteRes(data);
       }

@@ -31,7 +31,6 @@ function App() {
       setUser([]);
     };
   }, [token]);
-  console.log(user);
 
 
   return (

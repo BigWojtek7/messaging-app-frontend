@@ -18,7 +18,7 @@ function Login() {
       });
       const data = await res.json();
       setFetchData(data);
-      console.log(data);
+
       const dataToken = data.token;
       localStorage.setItem('token', dataToken);
       setToken(dataToken);

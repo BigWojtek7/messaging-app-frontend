@@ -20,9 +20,7 @@ function CreateMessage() {
         }),
         method: 'post',
       });
-      console.log(res);
       const data = await res.json();
-      console.log(data);
       if (data.success) {
         setIsSent(true);
       }
@@ -55,7 +53,6 @@ function CreateMessage() {
     };
   }, [token]);
 
-  console.log(allUsers);
   return (
     <>
       {!isSent ? (

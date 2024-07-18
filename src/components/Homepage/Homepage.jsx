@@ -35,7 +35,6 @@ function Homepage() {
       setMessagesCount([]);
     };
   }, [user, token]);
-  console.log(messagesCount);
   return (
     <div className={styles.home}>
       <h2>Welcome to messaging App</h2>
