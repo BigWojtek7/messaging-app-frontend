@@ -12,21 +12,28 @@ function SignUp() {
     console.log(e.target.username.value);
 
     const postApi = async () => {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/register`, {
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username: e.target.username.value,
-          password: e.target.password.value,
-          re_password: e.target.re_password.value,
-        }),
-        method: 'post',
-      });
-      console.log(res);
-      const data = await res.json();
-      setFetchData(data);
-      console.log(data);
-      if (data.success) {
-        navigate('/');
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/register`,
+          {
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              username: e.target.username.value,
+              password: e.target.password.value,
+              re_password: e.target.re_password.value,
+            }),
+            method: 'post',
+          }
+        );
+        console.log(res);
+        const data = await res.json();
+        setFetchData(data);
+        console.log(data);
+        if (data.success) {
+          navigate('/');
+        }
+      } catch (err) {
+        console(err);
       }
     };
     postApi();

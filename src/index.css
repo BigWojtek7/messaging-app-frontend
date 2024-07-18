@@ -5,13 +5,13 @@
   padding: 0;
 }
 
-body{
+body {
   width: 100vw;
   height: 100vh;
   background-color: rgb(234, 234, 234);
 }
 
-#root{
+#root {
   height: 100%;
 }
 
@@ -20,9 +20,19 @@ form {
   flex-direction: column;
   align-items: baseline;
   gap: 5px;
+  margin-bottom: 1em;
+  margin-top: 1em;
 }
+
+form input,
+textarea {
+  font: 1em sans-serif;
+  padding: 0.2em;
+  border: 1px solid #999;
+}
+
 form p {
-  font-size: .8em;
+  font-size: 0.8em;
 }
 
 button {
@@ -34,6 +44,6 @@ button {
   font-weight: 700;
   cursor: pointer;
 }
-button:hover{
+button:hover {
   background-color: #016090;
 }
