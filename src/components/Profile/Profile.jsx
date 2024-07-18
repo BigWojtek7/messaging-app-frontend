@@ -7,7 +7,10 @@ function Profile() {
   const initialUsernameValue = user.username;
   const [usernameInput, setUsernameInput] = useState();
 
-  const [isUpdated, setIsUpdated] = useState(null);
+  const [usernameFetch, setUsernameFetch] = useState(null);
+  const [passwordFetch, setPasswordFetch] = useState(null);
+
+  const [isUpdated, setIsUpdated] = useState(false);
 
   useEffect(() => {
     setUsernameInput(initialUsernameValue);
@@ -28,8 +31,9 @@ function Profile() {
         console.log(res);
         const data = await res.json();
         console.log(data);
+        setUsernameFetch(data);
         if (data.success) {
-          setIsUpdated(data);
+          setIsUpdated(true);
         }
       } catch (err) {
         console.log(err);
@@ -55,8 +59,9 @@ function Profile() {
         console.log(res);
         const data = await res.json();
         console.log(data);
+        setPasswordFetch(data);
         if (data.success) {
-          setIsUpdated(data);
+          setIsUpdated(true);
         }
       } catch (err) {
         console.log(err);
@@ -64,6 +69,7 @@ function Profile() {
     };
     postApi();
   };
+
 
   return (
     <>
@@ -79,6 +85,10 @@ function Profile() {
               onChange={(e) => setUsernameInput(e.target.value)}
               type="text"
             />
+            {usernameFetch &&
+              usernameFetch.msg.map((err, index) => (
+                <p key={index}>{err.msg}</p>
+              ))}
             <button>Update</button>
           </form>
           <h2>Edit your password</h2>
@@ -90,10 +100,14 @@ function Profile() {
             <label htmlFor="re_password">Re-Password</label>
             <input id="re_password" name="re_password" type="password" />
             <button>Update</button>
+            {passwordFetch &&
+              passwordFetch.msg.map((err, index) => (
+                <p key={index}>{err.msg}</p>
+              ))}
           </form>
         </div>
       ) : (
-        <p>{isUpdated.msg}</p>
+        <p>{usernameFetch?.msg || passwordFetch?.msg}</p>
       )}
     </>
   );
