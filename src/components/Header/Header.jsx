@@ -32,7 +32,7 @@ function Header({ token, setToken, user }) {
             Hello <strong>{user.username}</strong>!{' '}
           </span>
           <a href="#" onClick={handleLogout}>
-            <Icon path={mdiLogout} size={2} />
+            <Icon path={mdiLogout} size={2} color="#dc2626" />
           </a>
         </div>
       )}

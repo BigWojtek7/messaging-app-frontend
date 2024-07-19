@@ -4,7 +4,7 @@ import { useOutletContext } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import getRequestWithNativeFetch from '../../utils/fetchApiGet';
 import Icon from '@mdi/react';
-import { mdiLogin } from '@mdi/js';
+import { mdiLogin, mdiAccount } from '@mdi/js';
 
 function Homepage() {
   const [messagesCount, setMessagesCount] = useState([]);
@@ -44,9 +44,14 @@ function Homepage() {
           You have {messagesCount} {messagesCount <= 1 ? 'message' : 'messages'}
         </h3>
       ) : (
-        <Link className={styles.login} to="/login">
-          <Icon path={mdiLogin} size={5}></Icon>
-        </Link>
+        <div>
+          <Link className={styles.login} to="/login">
+            <Icon path={mdiLogin} size={5} color="#84cc16"></Icon>
+          </Link>
+          <Link className={styles.signUp} to="/sign-up">
+            <Icon path={mdiAccount} size={5} color="#f59e0b"></Icon>
+          </Link>
+        </div>
       )}
     </div>
   );

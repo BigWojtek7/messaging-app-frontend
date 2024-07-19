@@ -1,8 +1,9 @@
 .home {
-  margin: 3em
+  margin: 3em;
 }
 
-.login{
+.login,
+.signUp {
   text-decoration: inherit;
   color: inherit;
 }
