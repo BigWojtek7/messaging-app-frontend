@@ -25,11 +25,10 @@ function Login() {
         );
         setFetchData(messagesData);
 
-        const dataToken = messagesData.token;
-        localStorage.setItem('token', dataToken);
-        setToken(dataToken);
-
         if (messagesData.success) {
+          const dataToken = messagesData.token;
+          localStorage.setItem('token', dataToken);
+          setToken(dataToken);
           navigate('/');
         }
       } catch (err) {

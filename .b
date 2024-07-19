@@ -1,0 +1,1 @@
+VITE_BACKEND_URL = "https://bumpy-heathered-lentil.glitch.me"
