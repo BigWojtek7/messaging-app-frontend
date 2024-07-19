@@ -1,14 +1,18 @@
 import { useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import requestWithNativeFetch from '../../utils/fetchApi';
+import Loader from '../Loader/Loader';
 
 function Login() {
   const [fetchData, setFetchData] = useState(null);
   const [token, setToken] = useOutletContext();
   const navigate = useNavigate();
 
+  const [isServerLoading, setIsServerLoading] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsServerLoading(true);
     const fetchDataForLogin = async () => {
       try {
         const url = `${import.meta.env.VITE_BACKEND_URL}/login`;
@@ -24,7 +28,7 @@ function Login() {
           data
         );
         setFetchData(messagesData);
-
+        setIsServerLoading(false)
         if (messagesData.success) {
           const dataToken = messagesData.token;
           localStorage.setItem('token', dataToken);
@@ -40,7 +44,7 @@ function Login() {
 
   return (
     <>
-      {!token ? (
+      {isServerLoading? <Loader/>: !token ? (
         <form onSubmit={handleSubmit}>
           <label htmlFor="username">Username</label>
           <input id="username" name="username" type="text" />
