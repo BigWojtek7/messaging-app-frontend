@@ -58,7 +58,7 @@ function Profile() {
     e.preventDefault();
     const fetchDataForChangePassword = async () => {
       try {
-        const url = `http://localhost:3000/${user._id}/password`;
+        const url = `${import.meta.env.VITE_BACKEND_URL}/${user._id}/password`;
         const headers = {
           'Content-Type': 'application/json',
           Authorization: token,
