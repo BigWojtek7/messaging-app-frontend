@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOutletContext } from 'react-router-dom';
+import Loader from '../Loader/Loader';
 
 import requestWithNativeFetch from '../../utils/fetchApi';
 
 function SignUp() {
   const [fetchData, setFetchData] = useState(null);
-  const [token, setToken] = useOutletContext();
+  const [token, setToken, , isLoading, setIsLoading] = useOutletContext();
 
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true)
     const fetchDataForCreateUser = async () => {
       try {
         const url = `${import.meta.env.VITE_BACKEND_URL}/register`;
@@ -29,8 +31,9 @@ function SignUp() {
           headers,
           data
         );
+        setFetchData(createUserData);
+        setIsLoading(false)
         if (createUserData.success) {
-          setFetchData(createUserData);
           const dataToken = createUserData.token;
           localStorage.setItem('token', dataToken);
           setToken(dataToken);
@@ -45,7 +48,7 @@ function SignUp() {
 
   return (
     <>
-      {!token ? (
+      {isLoading? <Loader/>: !token ? (
         <form onSubmit={handleSubmit}>
           <label htmlFor="username">Username</label>
           <input id="username" name="username" type="text" />

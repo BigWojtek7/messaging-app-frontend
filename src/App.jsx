@@ -10,6 +10,7 @@ function App() {
 
   const currentToken = localStorage.getItem('token');
   const [token, setToken] = useState(currentToken);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (token) {
@@ -40,7 +41,7 @@ function App() {
       <main className={styles.mainDiv}>
         <Header token={token} setToken={setToken} user={user} />
         <div className={styles.content}>
-          <Outlet context={[token, setToken, user]} />
+          <Outlet context={[token, setToken, user, isLoading, setIsLoading]} />
         </div>
       </main>
     </div>

@@ -5,14 +5,13 @@ import Loader from '../Loader/Loader';
 
 function Login() {
   const [fetchData, setFetchData] = useState(null);
-  const [token, setToken] = useOutletContext();
+  const [token, setToken,, isLoading, setIsLoading] = useOutletContext();
   const navigate = useNavigate();
 
-  const [isServerLoading, setIsServerLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsServerLoading(true);
+    setIsLoading(true);
     const fetchDataForLogin = async () => {
       try {
         const url = `${import.meta.env.VITE_BACKEND_URL}/login`;
@@ -28,7 +27,7 @@ function Login() {
           data
         );
         setFetchData(messagesData);
-        setIsServerLoading(false)
+        setIsLoading(false)
         if (messagesData.success) {
           const dataToken = messagesData.token;
           localStorage.setItem('token', dataToken);
@@ -44,7 +43,7 @@ function Login() {
 
   return (
     <>
-      {isServerLoading? <Loader/>: !token ? (
+      {isLoading? <Loader/>: !token ? (
         <form onSubmit={handleSubmit}>
           <label htmlFor="username">Username</label>
           <input id="username" name="username" type="text" />

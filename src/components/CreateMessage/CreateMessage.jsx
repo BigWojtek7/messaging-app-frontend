@@ -1,20 +1,22 @@
 import { useOutletContext } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import getRequestWithNativeFetch from '../../utils/fetchApiGet';
+import Loader from '../Loader/Loader';
 
 import requestWithNativeFetch from '../../utils/fetchApi';
 
 function CreateMessage() {
-  const [token, , user] = useOutletContext();
+  const [token, , user, isLoading, setIsLoading] = useOutletContext();
   const [allUsers, setAllUsers] = useState([]);
 
   const [isSent, setIsSent] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const fetchDataForCreateMessage = async () => {
       try {
-        const url = 'http://localhost:3000/create-message';
+        const url = `${import.meta.env.VITE_BACKEND_URL}/create-message`;
         const headers = {
           'Content-Type': 'application/json',
           Authorization: token,
@@ -30,6 +32,7 @@ function CreateMessage() {
           headers,
           data
         );
+        setIsLoading(false);
         if (createMessageData.success) {
           setIsSent(true);
         }
@@ -63,7 +66,9 @@ function CreateMessage() {
 
   return (
     <>
-      {!isSent ? (
+      {isLoading ? (
+        <Loader />
+      ) : !isSent ? (
         <form onSubmit={handleSubmit}>
           <p>
             From: <strong>{user.username}</strong>
