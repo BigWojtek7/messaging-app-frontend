@@ -127,7 +127,7 @@ function Profile() {
         <div className={styles.profileEdited}>
           <p>{usernameFetch?.msg || passwordFetch?.msg}</p>
           <Link className={styles.login} to="/login">
-            <Icon path={mdiLogin} size={5}></Icon>
+            <Icon path={mdiLogin} size={5} color="#84cc16"></Icon>
           </Link>
         </div>
       )}

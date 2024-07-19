@@ -15,9 +15,11 @@ import {
 function Sidebar({ token }) {
   return (
     <div className={styles.sidebar}>
-      <div className={styles.menu}>
-        <Icon path={mdiViewDashboard} size={2} />
-        <h1>Menu:</h1>
+      <div>
+        <Link className={styles.menu} to="/">
+          <Icon path={mdiViewDashboard} size={2} />
+          <h1>Menu:</h1>
+        </Link>
       </div>
       <ul>
         <li>
@@ -27,12 +29,12 @@ function Sidebar({ token }) {
         {!token && (
           <>
             <li>
-              <Icon path={mdiAccountPlus} size={1.4} />
-              <Link to="sign-up">Sign Up</Link>
-            </li>
-            <li>
               <Icon path={mdiLogin} size={1.4} />
               <Link to="login">Log-in</Link>
+            </li>
+            <li>
+              <Icon path={mdiAccountPlus} size={1.4} />
+              <Link to="sign-up">Sign Up</Link>
             </li>
           </>
         )}

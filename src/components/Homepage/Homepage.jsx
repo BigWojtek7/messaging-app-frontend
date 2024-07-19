@@ -11,7 +11,7 @@ function Homepage() {
   const [token, , user] = useOutletContext();
 
   useEffect(() => {
-    if (user._id) {
+    if (token && user._id) {
       const fetchDataForMessagesCount = async () => {
         try {
           const url = `${import.meta.env.VITE_BACKEND_URL}/${
