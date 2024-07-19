@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useOutletContext, Link } from 'react-router-dom';
 import styles from './Profile.module.css';
+import Loader from '../Loader/Loader';
 
 import requestWithNativeFetch from '../../utils/fetchApi';
 
@@ -8,7 +9,7 @@ import Icon from '@mdi/react';
 import { mdiLogin } from '@mdi/js';
 
 function Profile() {
-  const [token, setToken, user] = useOutletContext();
+  const [token, setToken, user, isLoading, setIsLoading] = useOutletContext();
 
   const [usernameInput, setUsernameInput] = useState();
 
@@ -24,6 +25,7 @@ function Profile() {
 
   const handleEditUsername = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const fetchDataForChangeUsername = async () => {
       try {
         const url = `${import.meta.env.VITE_BACKEND_URL}/${user._id}/username`;
@@ -41,6 +43,7 @@ function Profile() {
           data
         );
         setUsernameFetch(usernameChangeData);
+        setIsLoading(false);
 
         if (usernameChangeData.success) {
           setIsUpdated(true);
@@ -56,6 +59,7 @@ function Profile() {
 
   const handleEditPassword = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const fetchDataForChangePassword = async () => {
       try {
         const url = `${import.meta.env.VITE_BACKEND_URL}/${user._id}/password`;
@@ -75,6 +79,7 @@ function Profile() {
           data
         );
         setPasswordFetch(passwordChangeData);
+        setIsLoading(false);
 
         if (passwordChangeData.success) {
           setIsUpdated(true);
@@ -90,7 +95,9 @@ function Profile() {
 
   return (
     <>
-      {!isUpdated ? (
+      {isLoading ? (
+        <Loader />
+      ) : !isUpdated ? (
         <div className="profile">
           <h2>Edit your username</h2>
           <form onSubmit={handleEditUsername}>
