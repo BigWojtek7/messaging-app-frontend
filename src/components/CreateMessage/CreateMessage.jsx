@@ -2,6 +2,8 @@ import { useOutletContext } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import getRequestWithNativeFetch from '../../utils/fetchApiGet';
 
+import requestWithNativeFetch from '../../utils/fetchApi';
+
 function CreateMessage() {
   const [token, , user] = useOutletContext();
   const [allUsers, setAllUsers] = useState([]);
@@ -10,25 +12,33 @@ function CreateMessage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const postApi = async () => {
-      const res = await fetch('http://localhost:3000/create-message', {
-        headers: { 'Content-Type': 'application/json', Authorization: token },
-        body: JSON.stringify({
+    const fetchDataForCreateMessage = async () => {
+      try {
+        const url = 'http://localhost:3000/create-message';
+        const headers = {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        };
+        const data = {
           title: e.target.title.value,
           content: e.target.content.value,
           receiver: e.target.receiver.value,
-        }),
-        method: 'post',
-      });
-      const data = await res.json();
-      if (data.success) {
-        setIsSent(true);
+        };
+        const createMessageData = await requestWithNativeFetch(
+          url,
+          'POST',
+          headers,
+          data
+        );
+        if (createMessageData.success) {
+          setIsSent(true);
+        }
+      } catch (err) {
+        console.log(err);
       }
     };
-    postApi();
+    fetchDataForCreateMessage();
   };
-
 
   useEffect(() => {
     if (token) {
@@ -50,7 +60,6 @@ function CreateMessage() {
       setAllUsers([]);
     };
   }, [token]);
-
 
   return (
     <>

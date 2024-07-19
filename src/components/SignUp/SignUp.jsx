@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOutletContext } from 'react-router-dom';
 
+import requestWithNativeFetch from '../../utils/fetchApi';
+
 function SignUp() {
   const [fetchData, setFetchData] = useState(null);
   const navigate = useNavigate();
@@ -9,36 +11,34 @@ function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target.username.value);
-
-    const postApi = async () => {
+    const fetchDataForCreateUser = async () => {
       try {
-        const res = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/register`,
-          {
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              username: e.target.username.value,
-              password: e.target.password.value,
-              re_password: e.target.re_password.value,
-            }),
-            method: 'post',
-          }
+        const url = `${import.meta.env.VITE_BACKEND_URL}/register`;
+        const headers = {
+          'Content-Type': 'application/json',
+        };
+        const data = {
+          username: e.target.username.value,
+          password: e.target.password.value,
+          re_password: e.target.re_password.value,
+        };
+        const createUserData = await requestWithNativeFetch(
+          url,
+          'POST',
+          headers,
+          data
         );
-        console.log(res);
-        const data = await res.json();
-        setFetchData(data);
-        console.log(data);
-        if (data.success) {
+        setFetchData(createUserData);
+
+        if (createUserData.success) {
           navigate('/');
         }
       } catch (err) {
-        console(err);
+        console.log(err);
       }
     };
-    postApi();
+    fetchDataForCreateUser();
   };
-  console.log(fetchData);
 
   return (
     <>

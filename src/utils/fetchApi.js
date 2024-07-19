@@ -1,4 +1,9 @@
-const requestWithNativeFetch = async (url, method, headers, data=undefined) => {
+const requestWithNativeFetch = async (
+  url,
+  method,
+  headers,
+  data = undefined
+) => {
   const response = await fetch(url, {
     method: method,
     headers: headers,

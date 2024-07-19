@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
+import requestWithNativeFetch from '../../utils/fetchApi';
+
 function Profile() {
   const [token, , user] = useOutletContext();
 
-  const initialUsernameValue = user.username;
   const [usernameInput, setUsernameInput] = useState();
 
   const [usernameFetch, setUsernameFetch] = useState(null);
@@ -13,63 +14,71 @@ function Profile() {
   const [isUpdated, setIsUpdated] = useState(false);
 
   useEffect(() => {
+    const initialUsernameValue = user.username;
     setUsernameInput(initialUsernameValue);
-  }, [initialUsernameValue]);
+  }, [user.username]);
 
   const handleEditUsername = (e) => {
     e.preventDefault();
-    // console.log(e.target.username.value);
-    const postApi = async () => {
+    const fetchDataForChangeUsername = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/${user._id}/username`, {
-          headers: { 'Content-Type': 'application/json', Authorization: token },
-          body: JSON.stringify({
-            username: e.target.username.value,
-          }),
-          method: 'PATCH',
-        });
-        console.log(res);
-        const data = await res.json();
-        console.log(data);
-        setUsernameFetch(data);
-        if (data.success) {
+        const url = `${import.meta.env.VITE_BACKEND_URL}/${user._id}/username`;
+        const headers = {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        };
+        const data = {
+          username: e.target.username.value,
+        };
+        const usernameChangeData = await requestWithNativeFetch(
+          url,
+          'PATCH',
+          headers,
+          data
+        );
+        setUsernameFetch(usernameChangeData);
+
+        if (usernameChangeData.success) {
           setIsUpdated(true);
         }
       } catch (err) {
         console.log(err);
       }
     };
-    postApi();
+    fetchDataForChangeUsername();
   };
 
   const handleEditPassword = (e) => {
     e.preventDefault();
-    // console.log(e.target.username.value);
-    const postApi = async () => {
+    const fetchDataForChangePassword = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/${user._id}/password`, {
-          headers: { 'Content-Type': 'application/json', Authorization: token },
-          body: JSON.stringify({
-            old_password: e.target.old_password.value,
-            new_password: e.target.password.value,
-            re_new_password: e.target.re_password.value,
-          }),
-          method: 'PATCH',
-        });
-        console.log(res);
-        const data = await res.json();
-        console.log(data);
-        setPasswordFetch(data);
-        if (data.success) {
+        const url = `http://localhost:3000/${user._id}/password`;
+        const headers = {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        };
+        const data = {
+          old_password: e.target.old_password.value,
+          new_password: e.target.password.value,
+          re_new_password: e.target.re_password.value,
+        };
+        const passwordChangeData = await requestWithNativeFetch(
+          url,
+          'PATCH',
+          headers,
+          data
+        );
+        setPasswordFetch(passwordChangeData);
+
+        if (passwordChangeData.success) {
           setIsUpdated(true);
         }
       } catch (err) {
         console.log(err);
       }
     };
-    postApi();
+    fetchDataForChangePassword();
   };
-
 
   return (
     <>

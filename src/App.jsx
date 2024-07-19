@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import getRequestWithNativeFetch from './utils/fetchApiGet';
 
 function App() {
-  const [user, setUser] = useState({_id: undefined, username: undefined});
+  const [user, setUser] = useState({ _id: undefined, username: undefined });
 
   const currentToken = localStorage.getItem('token');
   const [token, setToken] = useState(currentToken);
@@ -20,19 +20,17 @@ function App() {
             Authorization: token,
           };
           const userData = await getRequestWithNativeFetch(url, headers);
-          setUser(userData)
+          setUser(userData);
         } catch (err) {
           console.log(err);
         }
       };
       fetchDataForUsers();
     }
-
     return () => {
       setUser([]);
     };
   }, [token]);
-
 
   return (
     <div className={styles.app}>
@@ -42,7 +40,7 @@ function App() {
       <main className={styles.mainDiv}>
         <Header token={token} setToken={setToken} user={user} />
         <div className={styles.content}>
-          <Outlet context={[token, setToken, user]}/>
+          <Outlet context={[token, setToken, user]} />
         </div>
       </main>
     </div>

@@ -37,9 +37,6 @@ function Login() {
       }
     };
     fetchDataForLogin();
-    return () => {
-      setFetchData([]);
-    };
   };
 
   return (
