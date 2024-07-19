@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, Link } from 'react-router-dom';
+import styles from './Profile.module.css';
 
 import requestWithNativeFetch from '../../utils/fetchApi';
 
+import Icon from '@mdi/react';
+import { mdiLogin } from '@mdi/js';
+
 function Profile() {
-  const [token, , user] = useOutletContext();
+  const [token, setToken, user] = useOutletContext();
 
   const [usernameInput, setUsernameInput] = useState();
 
@@ -40,6 +44,8 @@ function Profile() {
 
         if (usernameChangeData.success) {
           setIsUpdated(true);
+          localStorage.removeItem('token');
+          setToken(null);
         }
       } catch (err) {
         console.log(err);
@@ -72,6 +78,8 @@ function Profile() {
 
         if (passwordChangeData.success) {
           setIsUpdated(true);
+          localStorage.removeItem('token');
+          setToken(null);
         }
       } catch (err) {
         console.log(err);
@@ -116,7 +124,12 @@ function Profile() {
           </form>
         </div>
       ) : (
-        <p>{usernameFetch?.msg || passwordFetch?.msg}</p>
+        <div className={styles.profileEdited}>
+          <p>{usernameFetch?.msg || passwordFetch?.msg}</p>
+          <Link className={styles.login} to="/login">
+            <Icon path={mdiLogin} size={5}></Icon>
+          </Link>
+        </div>
       )}
     </>
   );
